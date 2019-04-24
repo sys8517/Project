@@ -40,10 +40,10 @@ public class TabFragment2 extends Fragment {
         recyclerView.setAdapter(rAdapter);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        database.child("message").addChildEventListener(new ChildEventListener() {
+        database.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                RecyclerModel recyclerModel1 = (RecyclerModel) dataSnapshot.getValue();
+                RecyclerModel recyclerModel1=dataSnapshot.getValue(RecyclerModel.class);
                 recyclerModel.add(recyclerModel1);
                 rAdapter.notifyDataSetChanged();
             }
