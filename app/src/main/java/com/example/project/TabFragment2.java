@@ -1,5 +1,6 @@
 package com.example.project;
 
+import android.app.Dialog;
 import android.icu.util.Freezable;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -39,6 +40,16 @@ public class TabFragment2 extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(rAdapter);
         recyclerView.setLayoutManager(linearLayoutManager);
+
+//
+//        rAdapter.setItemClick(new RecyclerAdapter.ItemClick() {
+//            @Override
+//            public void onClick(View view, int position) {
+//                Dialog();
+//
+//
+//            }
+//        });
 
         database.addChildEventListener(new ChildEventListener() {
             @Override

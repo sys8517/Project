@@ -11,9 +11,20 @@ import java.util.ArrayList;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
     private ArrayList<RecyclerModel> recyclerModels;
+//    private ItemClick itemClick;
+
     RecyclerAdapter(ArrayList<RecyclerModel> recyclerModels) {
         this.recyclerModels = recyclerModels;
     }
+
+//    private interface ItemClick {
+//        public void onClick(View view, int position);
+//
+//    }
+//
+//    public void setItemClick(ItemClick itemClick) {
+//        this.itemClick=itemClick;
+//    }
 
     @NonNull
     @Override
@@ -24,8 +35,19 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+        final int Position = i;
         RecyclerModel recyclerModel =recyclerModels.get(i);
         viewHolder.text_Title.setText(recyclerModel.getText());
+
+//        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if(itemClick !=null){
+//                    itemClick.onClick(v, Position);
+//                }
+//            }
+//        });
+
 
     }
 
@@ -41,4 +63,5 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             text_Title=itemView.findViewById(R.id.title);
         }
     }
+
 }

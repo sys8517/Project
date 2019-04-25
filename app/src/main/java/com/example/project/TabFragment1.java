@@ -42,7 +42,7 @@ public class TabFragment1 extends Fragment {
             @Override
             public void onClick(View v) {
                 if(editText.getText().toString().trim().length()==0){
-                    Toast.makeText(getActivity(),"입력해 ㅅㅂ놈아",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(),"입력해 주세요",Toast.LENGTH_SHORT).show();
                 }
                 else{
                     RecyclerModel recyclerModel=new RecyclerModel();

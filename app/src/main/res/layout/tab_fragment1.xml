@@ -9,7 +9,7 @@
         android:id="@+id/memoEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="메모를 입력하세요"
+        android:hint="메모를 입력하세요"
         />
     <Button
         android:layout_marginTop="100dp"

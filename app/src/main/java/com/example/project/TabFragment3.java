@@ -71,6 +71,12 @@ public class TabFragment3 extends Fragment {
                 materialCalendarView.clearSelection();
 
                 Toast.makeText(getContext(), shot_Day, Toast.LENGTH_SHORT).show();
+
+                //if 달력 일정이 비었으면 메모 다이얼로그, 안 비었으면 보여주는 다이얼로그
+
+
+
+
             }
         });
 
