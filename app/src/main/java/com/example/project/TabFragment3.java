@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.prolificinteractive.materialcalendarview.CalendarDay;
@@ -30,6 +31,7 @@ public class TabFragment3 extends Fragment {
     private final OneDayDecorator oneDayDecorator = new OneDayDecorator();
     Cursor cursor;
     MaterialCalendarView materialCalendarView;
+    TextView memoT;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -71,11 +73,23 @@ public class TabFragment3 extends Fragment {
                 materialCalendarView.clearSelection();
 
                 Toast.makeText(getContext(), shot_Day, Toast.LENGTH_SHORT).show();
+
+                ViewDialogFragment t = new ViewDialogFragment();
+                CustomDialog customDialog = new CustomDialog(getContext());
+                memoT = getView().findViewById(R.id.memoView);
+
+
+                customDialog.callFunction(memoT);
+
+                //call function 은 보여줄 다이얼로그 xml 안의 텍뷰로 하기:)
+
+
                 //if 달력 일정이 비었으면 메모 다이얼로그, 안 비었으면 보여주는 다이얼로그
 //
 //                CustomDialog customDialog = new CustomDialog(//TabFragment3);
 
-
+                t = ViewDialogFragment.getInstance();
+                t.show(getFragmentManager(), ViewDialogFragment.TAG_EVENT_DIALOG);
 
 
 

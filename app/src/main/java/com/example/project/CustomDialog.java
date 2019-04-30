@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TabLayout;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -20,6 +21,7 @@ import com.google.firebase.database.Exclude;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.prolificinteractive.materialcalendarview.CalendarDay;
 
 
 import java.util.ArrayList;
@@ -58,6 +60,7 @@ public class CustomDialog {
             FirebasePost post = new FirebasePost(ID, memo);
             postValues = post.toMap();
         }
+
         childUpdates.put("/id_list/" + ID, postValues);
         mPostReference.updateChildren(childUpdates);
     }
@@ -90,6 +93,7 @@ public class CustomDialog {
             }
 
         };
+
         Query sortbyAge = FirebaseDatabase.getInstance().getReference().child("id_list").orderByChild(sort);
         sortbyAge.addListenerForSingleValueEvent(postListener);
 
@@ -101,6 +105,7 @@ public class CustomDialog {
 
     @SuppressLint("ResourceType")
     public void callFunction(final TextView main_label) {
+
         final Dialog dlg = new Dialog(context);
 
         dlg.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -118,6 +123,18 @@ public class CustomDialog {
         okBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // 날짜 얻어오기. ID = get날짜 (메모를 작성하려고 터치한 날짜)
+                CalendarDay date = null;
+                int Year = date.getYear();
+                int Month = date.getMonth();
+                int Day = date.getDay();
+
+                ID =  Year + "," + Month + "," + Day;
+                memo = message.getText().toString();
+                postFirebaseDatabase(true);
+                getFirebaseDatabase();
+
+
 
 
 //                // ok 버튼 클릭시 파베에 데이터 보내기
