@@ -103,7 +103,7 @@ public class TabFragment3 extends Fragment {
     }
 
     private class ApiSimulator extends AsyncTask<Void, Void, List<CalendarDay>> {
-        String [] Time_result;
+        String[] Time_result;
 
         ApiSimulator(String[] Time_result) {
             this.Time_result = Time_result;
@@ -121,7 +121,7 @@ public class TabFragment3 extends Fragment {
             ArrayList<CalendarDay> dates = new ArrayList<>();
 
 
-            for(int i = 0; i< Time_result.length; i++) {
+            for (int i = 0; i < Time_result.length; i++) {
                 CalendarDay day = CalendarDay.from(calendar);
                 String[] time = Time_result[i].split(",");
                 int year = Integer.parseInt(time[0]);
@@ -129,7 +129,7 @@ public class TabFragment3 extends Fragment {
                 int dayy = Integer.parseInt(time[2]);
 
                 dates.add(day);
-                calendar.set(year,month-1,dayy);
+                calendar.set(year, month - 1, dayy);
 
             }
             return dates;
@@ -139,10 +139,11 @@ public class TabFragment3 extends Fragment {
         protected void onPostExecute(@NonNull List<CalendarDay> calendarDays) {
             super.onPostExecute(calendarDays);
 
-            if(isRemoving()) {
+            if (isRemoving()) {
+
                 return;
             }
             materialCalendarView.addDecorators(new EventDecorator(Color.GREEN, calendarDays, TabFragment3.this));
-         }
-    }
+        }
+    } 
 }

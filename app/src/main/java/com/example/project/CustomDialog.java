@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -39,11 +40,10 @@ public class CustomDialog {
     private Context context;
     ArrayAdapter<String> arrayAdapter;
 
-    static ArrayList<String> arrayIndex =  new ArrayList<String>();
+    static ArrayList<String> arrayIndex = new ArrayList<String>();
     static ArrayList<String> arrayData = new ArrayList<String>();
 
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-//    final DatabaseReference database = firebaseDatabase.getReference();
     private DatabaseReference mPostReference;
 
 
@@ -52,57 +52,6 @@ public class CustomDialog {
     }
 
 
-    public void postFirebaseDatabase(boolean add){
-        mPostReference = FirebaseDatabase.getInstance().getReference();
-        Map<String, Object> childUpdates = new HashMap<>();
-        Map<String, Object> postValues = null;
-        if(add){
-            FirebasePost post = new FirebasePost(ID, memo);
-            postValues = post.toMap();
-        }
-
-        childUpdates.put("/id_list/" + ID, postValues);
-        mPostReference.updateChildren(childUpdates);
-    }
-
-
-    public void getFirebaseDatabase() {
-        ValueEventListener postListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                arrayData.clear();
-                arrayIndex.clear();
-                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
-                    String key = postSnapshot.getKey();
-                    FirebasePost get = postSnapshot.getValue(FirebasePost.class);
-                    String[] info = {get.date, get.memo};
-                    String Result = setTextLength(info[0],10) + setTextLength(info[1],10) + setTextLength(info[2],10) + setTextLength(info[3],10);
-                    arrayData.add(Result);
-                    arrayIndex.add(key);
-                }
-                arrayAdapter.clear();
-                arrayAdapter.addAll(arrayData);
-                arrayAdapter.notifyDataSetChanged();
-
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-
-        };
-
-        Query sortbyAge = FirebaseDatabase.getInstance().getReference().child("id_list").orderByChild(sort);
-        sortbyAge.addListenerForSingleValueEvent(postListener);
-
-
-
-
-
-    }
-
     @SuppressLint("ResourceType")
     public void callFunction(final TextView main_label) {
 
@@ -110,7 +59,7 @@ public class CustomDialog {
 
         dlg.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-        dlg.setContentView(R.id.custom);
+        dlg.setContentView(R.layout.custom);
 
         dlg.show();
 
@@ -119,33 +68,29 @@ public class CustomDialog {
         final Button cancelButton = (Button) dlg.findViewById(R.id.cancelButton);
 
 
-
         okBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // 날짜 얻어오기. ID = get날짜 (메모를 작성하려고 터치한 날짜)
-                CalendarDay date = null;
-                int Year = date.getYear();
-                int Month = date.getMonth();
-                int Day = date.getDay();
 
-                ID =  Year + "," + Month + "," + Day;
-                memo = message.getText().toString();
-                postFirebaseDatabase(true);
-                getFirebaseDatabase();
+                //여기서 오류남 (널포인트 익셉션) ?
+                // 그냥 함수만 써야하나 함수는 post에 따로 구현?
 
 
-
-
+                DatabaseReference database = firebaseDatabase.getReference();
+                RecyclerModel recyclerModel = new RecyclerModel();
+                recyclerModel.setText(message.getText().toString());
 //                // ok 버튼 클릭시 파베에 데이터 보내기
-//                database.push().setValue(message.getText().toString());
-//                Toast.makeText(context, "\"" +  message.getText().toString() + "\" 을 입력하였습니다.", Toast.LENGTH_SHORT).show();
-
-
+                database.push().setValue(recyclerModel).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(context, "\"" + message.getText().toString() + "\" 을 입력하였습니다.", Toast.LENGTH_SHORT).show();
+                    }
+                });
 
                 // 커스텀 다이얼로그 종료
                 dlg.dismiss();
-        }
+            }
         });
 
 
@@ -160,10 +105,11 @@ public class CustomDialog {
             }
         });
     }
-    public String setTextLength(String text, int length){
-        if(text.length()<length){
+
+    public String setTextLength(String text, int length) {
+        if (text.length() < length) {
             int gap = length - text.length();
-            for (int i=0; i<gap; i++){
+            for (int i = 0; i < gap; i++) {
                 text = text + " ";
             }
         }
