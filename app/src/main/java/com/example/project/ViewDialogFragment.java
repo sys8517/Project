@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import static com.google.android.gms.common.internal.safeparcel.SafeParcelable.NULL;
+
 public class ViewDialogFragment extends DialogFragment implements View.OnClickListener {
 
 
@@ -25,7 +27,9 @@ public class ViewDialogFragment extends DialogFragment implements View.OnClickLi
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.dialog, container, false);
         TextView memoText = v.findViewById(R.id.memoView);
-        //memoText.setText(c.memo); //이렇게 가져오는 게 맞는건가?
+
+
+        //memo 가져오는 거 어떻게 하지
         return v;
     }
 

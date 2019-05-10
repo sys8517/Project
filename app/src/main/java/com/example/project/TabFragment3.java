@@ -79,7 +79,7 @@ public class TabFragment3 extends Fragment {
                 memoT = getView().findViewById(R.id.memoView);
 
 
-                customDialog.callFunction(memoT);
+                customDialog.callFunction(memoT, shot_Day);
 
                 //call function 은 보여줄 다이얼로그 xml 안의 텍뷰로 하기:)
 

@@ -53,7 +53,9 @@ public class CustomDialog {
 
 
     @SuppressLint("ResourceType")
-    public void callFunction(final TextView main_label) {
+    public void callFunction(final TextView main_label, final String day) {
+
+        final TabFragment3 t3 = new TabFragment3();
 
         final Dialog dlg = new Dialog(context);
 
@@ -81,7 +83,7 @@ public class CustomDialog {
                 RecyclerModel recyclerModel = new RecyclerModel();
                 recyclerModel.setText(message.getText().toString());
 //                // ok 버튼 클릭시 파베에 데이터 보내기
-                database.push().setValue(recyclerModel).addOnSuccessListener(new OnSuccessListener<Void>() {
+                database.child(day).push().setValue(recyclerModel).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Toast.makeText(context, "\"" + message.getText().toString() + "\" 을 입력하였습니다.", Toast.LENGTH_SHORT).show();
